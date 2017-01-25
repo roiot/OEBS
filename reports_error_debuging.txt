@@ -1,0 +1,4 @@
+http://erdemcer.blogspot.ru/2014/05/oracle-reports-rep-0069-rep-57054-error.html
+Oracle Reports REP-0069: REP-57054: Errorcd 
+When any concurrent requests with the execution method Oracle Reports are submitted, temp files are created under the path of 
+$INST_TOP/logs/ora/10.1.2/reports/cache
