@@ -9,12 +9,13 @@ select * from fnd_responsibility_vl where request_group_id in (2129, 794, 2049) 
 
 
 --User Responsibilities
- select r.application_id, r.responsibility_id, r.responsibility_name
+ select u.user_id, r.application_id, r.responsibility_id, r.responsibility_name
     from apps.fnd_user u,
          apps.fnd_user_resp_groups ur,
          apps.fnd_responsibility_tl r
    where ur.user_id = u.user_id
-     and u.user_name = 'SKRYABIN_DG@MOSCOW'
      and ur.responsibility_id = r.responsibility_id
      and r.language = 'RU'
+     and u.user_name = 'SKRYABIN_DG@MOSCOW'
+     and r.responsibility_name like 'LTLIF%'
 order by r.responsibility_name
