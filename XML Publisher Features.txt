@@ -1,0 +1,76 @@
+To insert a page break,
+
+insert a Ctrl-Enter keystroke just before the closing tag of a
+group. For example if you want the template to start a new page for every Supplier
+in the Payables Invoice Register:
+1. Place the cursor just before the Supplier group's closing <?end for-each?> tag.
+2. Press Ctrl-Enter to insert a page break.
+At runtime each Supplier will start on a new page.
+Using this Microsoft Word native feature will cause a single blank page to print at
+the end of your report output. To avoid this single blank page, use XML Publisher's
+page break alias. See Special Features: Page Breaks, page 2-50.
+
+
+To create a page break after the occurrence of a specific element use the
+"split-by-page-break" alias. This will cause the report output to insert a hard page break
+between every instance of a specific element.
+To insert a page break between each occurrence of a group, insert the
+"split-by-page-break" form field within the group immediately before the <?end
+for-each?> tag that closes the group. In the Help Text of this form field enter the
+syntax:
+<?split-by-page-break:?>
+
+
+Place the PageBreak field with the <?split-by-page-break:?> syntax
+immediately before the <?end for-each?> field. The PageBreak field sits inside the
+end of the SUPPLIER loop. This will ensure a page break is inserted before the
+occurrence of each new supplier. This method avoids the ejection of an extra page at the
+end of the group when using the native Microsoft Word page break after the group.
+
+
+<?if:number(../../row_num) mod 2 = 0?>
+
+=--------------------------------
+<?if@row:position() mod 2=0?>
+<xsl:attribute
+name="background-color"
+xdofo:ctx="incontext">lightgray</xsl:att
+ribute><?end if?>
+
+For each alternate row, the background
+color attribute is set to gray for the row.
+---------------------------------------
+<?if:debit>1000?><xsl:attri
+bute xdofo:ctx="block"
+name="background-color">red
+</xsl:attribute><?end if?>
+
+This field holds the code to highlight
+the cell red if the debit amount is
+greater than 1000.
+---------------------------------
+TOTALS
+To declare the variable that is to hold your page total, insert the following syntax
+immediately following the placeholder for the element that is to be totaled:
+<?add-page-total:TotalFieldName;'element'?>
+where
+TotalFieldName is the name you assign to your total (to reference later) and
+'element' is the XML element field to be totaled.
+You can add this syntax to as many fields as you want to total.
+Then when you want to display the total field, enter the following syntax:
+<?show-page-total:TotalFieldName;'Oracle-number-format'?>
+where
+TotalFieldName is the name you assigned to give the page total field above and
+Oracle-number-format is the format you wish to use to for the display, using the
+Oracle format mask (for example: C9G999D00).
+
+
+Use the following tags to enclose the body area of your report:
+<?start:body?>
+<?end body?>
+
+
+
+<?if: period_type=’CURRENT’?><?add-page-total:cur_ingouing_quantity_t;'ingouing_quantity'?><?end if?>
+
+<?xdoxslt:set_variable($_XDOCTX, cur_ingoing_quantity_gt, 0)?>

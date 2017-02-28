@@ -11,3 +11,11 @@ java oracle.apps.xdo.oa.util.XDOLoader UPLOAD -DB_USERNAME APPS -DB_PASSWORD $AP
 
 # Concurrent request - Download
 FNDLOAD apps/apps O Y DOWNLOAD $FND_TOP/patch/115/import/afcpprog.lct xxopm_b194_concurrent.ldt PROGRAM APPLICATION_SHORT_NAME=XXOPM CONCURRENT_PROGRAM_NAME=XXOPM_B194
+
+
+# Concurrent request - Download for several Languages
+#select language_code, nls_language||'_'||nls_territory from fnd_languages where installed_flag not in ('D')
+SetNLSUTF8 AMERICAN_AMERICA
+FNDLOAD apps/apps O Y DOWNLOAD $FND_TOP/patch/115/import/afcpprog.lct ./US/xxopm_b194_concurrent.ldt PROGRAM APPLICATION_SHORT_NAME=XXOPM CONCURRENT_PROGRAM_NAME=XXOPM_B194
+SetNLSUTF8 RUSSIAN_RUSSIA
+FNDLOAD apps/apps O Y DOWNLOAD $FND_TOP/patch/115/import/afcpprog.lct ./RU/xxopm_b194_concurrent.ldt PROGRAM APPLICATION_SHORT_NAME=XXOPM CONCURRENT_PROGRAM_NAME=XXOPM_B194
