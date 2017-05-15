@@ -18,6 +18,7 @@ To insert a page break between each occurrence of a group, insert the
 "split-by-page-break" form field within the group immediately before the <?end
 for-each?> tag that closes the group. In the Help Text of this form field enter the
 syntax:
+
 <?split-by-page-break:?>
 
 

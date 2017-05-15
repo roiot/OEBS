@@ -1,0 +1,125 @@
+Useful XML Publisher Report Syntax
+
+
+Useful XML Publisher Report Syntax
+Sub Templates:
+<?template:header?>
+This is Last Page
+<?end template?>
+
+After that you can type in header or footer section,
+<?call:header?>
+
+Last Page:
+Take the any one of the insert field type in the following syntax,
+Suppose,
+Field name : Last page body
+Status bar: <?start@last-page-first:body?><?end body?>
+This is last page
+
+Page Break:
+<?split-by-page-break:?>
+
+Section Break:
+<?for-each@section:G_CUSTOMER(This is group name)?>
+
+Properties:
+<?PASSWORD?>
+In XML we have to write in,
+<PASSWORD>welcome</PASSWORD>
+
+Bar Code:
+<?register-barcode-vendor:'oracle.apps.xdo.template.rtf.util.barcoder.BarcodeUtil';'XMLPBarVendor'?>
+
+<?format-barcode:JOB;'code128a';'XMLPBarVendor'?>
+
+Conditional Formating:
+<?if:ACCTD_AMT(This is column name)<1000?><xsl:attribute xdofo:ctx="block" or “incontext” name="font-weight">bold</xsl:attribute><?end if?>
+Incontext means: column level
+Block means: row level
+
+
+Multi Layout:
+<?choose:?>
+<?when:CF_CHOICE=’VENDOR’?>
+VENDOR NUMBER
+VENDOR NAME
+LOOKUP CODE
+oplv VENDNUM
+VENDNAME
+FLAG  eloop
+
+<?end when?>
+
+
+<?when:CF_CHOICE=’INVOICE’?>
+
+INVOICE NUMBER
+DESCRIPTION
+VENDOR ID
+opli invoicenum
+desc
+FLAG  eloop
+
+<?end when?>
+
+<?when:CF_CHOICE=’PO’?>
+
+PO NUMBER
+POVENDOR
+STATUS
+oplpo PONUM
+POVENDOR
+STATUS  eloop
+
+<?end when?>
+
+<?end choose?>
+
+Running Total:
+<?xdoxslt:set_variable($_XDOCTX, 'RTotVar', xdoxslt:get_variable($_XDOCTX, 'RTotVar') + ACCTD_AMT(This is column name) )?><?xdoxslt:get_variable($_XDOCTX, 'RTotVar')?>
+
+RTotVar means declare variable=0
+
+Brought forward and carried Forward:
+
+<xdofo: inline-total display-condition="exceptfirst" name="EntAmt"(This is column name)>Brought Forward: <xdofo:show-brought-forward name="EntAmt" (This is column name)format="99G999G999D00"/></xdofo:inline-total>
+
+<xdofo:inline-total display-condition="exceptfirst" name="EntAmt"(This is column name)><xdofo:show-brought-forward name="AcctAmt" (This is column name)format="99G999G999D00"/></xdofo:inline-total>
+<xdofo:inline-total display-condition="exceptlast" name="EntAmt"(This is column name)
+>Carried Forward:   <xdofo:show-carry-forward name="EntAmt" (This is column name)
+format="99G999G999D00"/></xdofo:inline-total>
+<xdofo:inline-total display-condition="exceptlast" name="AcctAmt"(This is column name)
+><xdofo:show-carry-forward name="AcctAmt" (This is column name)
+format="99G999G999D00"/></xdofo:inline-total>
+
+<?show-page-total:EntAmt(This is column name)
+;"99G999G999D00"?>
+
+<?show-page-total:AcctAmt(This is column name)
+;"99G999G999D00"?>
+
+
+Page Total:
+<?show-page-total:pt(This is parameter);'#,##0.00'?>
+
+Repeating Headre:
+
+for-each@section G_CUSTOMER
+CUSTOMER_NAME
+
+
+for-each G_CURRENCY
+
+
+Trx Number
+Trx Date
+Trx Amount
+Trx Amount Remaining
+for-each G_INVOICES TRX_NUMBER
+TRANSACTION_DATE
+TRANS_AMOUNT
+TRANS_AMOUNT_REMAINING end for-each
+
+end for-each
+end for-each
