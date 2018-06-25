@@ -12,7 +12,7 @@ select * from fnd_responsibility_vl where request_group_id in (2129, 794, 2049) 
          apps.fnd_user_resp_groups ur,
          apps.fnd_responsibility r,
          apps.fnd_responsibility_tl rl,
-         apps.fnd_menus_vl m
+         apps.fnd_menus_tl m
    where ur.user_id = u.user_id
      and ur.responsibility_id = r.responsibility_id
      and r.responsibility_id = rl.responsibility_id
@@ -20,9 +20,10 @@ select * from fnd_responsibility_vl where request_group_id in (2129, 794, 2049) 
      --
      and trunc(sysdate) between ur.start_date and nvl(ur.end_date, sysdate+1)
      and rl.language = 'RU'
+     and m.language = 'RU'
      and u.user_name = 'SKRYABIN_DG@MOSCOW'
      and rl.responsibility_name like '%'
-order by rl.responsibility_name
+order by rl.responsibility_name;
 
 
 -- Menu Functions 
