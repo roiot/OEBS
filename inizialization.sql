@@ -10,6 +10,8 @@ from dual
 begin
   fnd_global.apps_initialize(user_id => 7033, resp_id => 51088, resp_appl_id => 552);
   apps.mo_global.set_policy_context('S', 221); -- R12
+  -- apps.mo_global.init(p_mo_appl); --default 'M'
+  -- fnd_signon.SET_SESSION(null); for views required OEBS session
 end;
 
  select 'begin -- ' || rtl.responsibility_name || chr(10) || 
