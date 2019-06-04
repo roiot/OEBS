@@ -31,7 +31,9 @@ begin
    dbms_output.put_line('Inserted!');        
 exception 
     when others then 
-        if sqlerrm like '%FND_CANT_INSERT_USER_ROLE%' then 
+        if sqlerrm like '%FND_CANT_INSERT_USER_ROLE%' 
+            or sqlerrm like '%APP-FND-01971%' -- Ошибка в программе FND_USER_RESP_GROUPS_API.Insert_Assignment: вставка строки невозможна, поскольку уже существует прямое назначение пользователя SKRYABIN_DG@MOSCOW на роль FND_RESP|SYSADMIN|SYSTEM_ADMINISTRATOR|STANDARD в таблицах пользователей/ролей потока операций. в программе FND_USER_RESP_GROUPS_API.INSERT
+        then 
             fnd_user_resp_groups_api.Update_Assignment  (  user_id                            => i,
                                                            responsibility_id                  => 20420,
                                                            responsibility_application_id      => 1,
